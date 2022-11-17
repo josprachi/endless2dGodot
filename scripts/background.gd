@@ -13,6 +13,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	scroll_base_offset+= Vector2(-15,0)
+	if get_parent().gameOver== false:
+		scroll_base_offset+= Vector2(-15,0)
+	else:
+		scroll_base_offset= Vector2(0,0)	
 	
 #	pass

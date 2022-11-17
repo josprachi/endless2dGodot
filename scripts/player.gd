@@ -18,22 +18,36 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_pressed("jump"):
-		$Tween.start()
-		$Tween.interpolate_property(self, "position",
-		pointOrig, jumpPoint, 1,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		$PlayerSprite.play("jump")
-		yield($Tween,"tween_completed")
-		$Tween.interpolate_property(self, "position",
-		 jumpPoint,pointOrig, 1,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		yield($Tween,"tween_completed")
-		$PlayerSprite.play("run")
+	if get_parent().gameOver:
+		print("gameover")
+	else:	
+		if Input.is_action_pressed("jump"):
+			$Tween.start()
+			$Tween.interpolate_property(self, "position",
+			pointOrig, jumpPoint, 0.5,
+			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$PlayerSprite.play("jump")
+			yield($Tween,"tween_completed")
+			$Tween.interpolate_property(self, "position",
+			 jumpPoint,pointOrig, 0.5,
+			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			yield($Tween,"tween_completed")
+			$PlayerSprite.play("run")
 
 
 func _on_Player_body_entered(body):	
 	get_parent().updateScore()
-	body.eaten()
-	
-	#body.queue_free()
+	if get_parent().gameOver == true:
+		body.sleeping=true
+	if (str(body.name).find("mashroom"))!= -1:
+		body.eaten()
+	else:
+		get_parent().stopMoving()
+		$PlayerSprite.play("die")
+		yield($PlayerSprite,"animation_finished")
+		$PlayerSprite.playing=false
+		self.visible=false
+		get_parent().get_node("HUD").visible=true
+		
+		#print(body.name)	
+			#body.queue_free()

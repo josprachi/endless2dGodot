@@ -20,7 +20,9 @@ func eaten():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	self.linear_velocity +=Vector2(-1,0)
+	if get_parent().gameOver:
+		queue_free()
+	#self.linear_velocity +=Vector2(-1,0)
 #	pass
 
 

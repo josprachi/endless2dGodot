@@ -52,7 +52,7 @@ color = Color( 0.74902, 0.74902, 0.0352941, 0.341176 )
 
 [node name="Enemy" type="AnimatedSprite"]
 frames = SubResource( 1 )
-frame = 3
+frame = 5
 playing = true
 script = ExtResource( 19 )
 
